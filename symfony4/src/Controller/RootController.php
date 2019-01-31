@@ -84,4 +84,42 @@ class RootController extends AbstractController
         ]);
     }
 
+
+    // 利用するサービスクラスをメソッドインジェクションする
+
+    /**
+     * @Route("/service/useService1", methods={"GET"})
+     */
+    public function useSerivce1(\App\Service\SampleService $sampleService)
+    {
+        $result = $sampleService->helloWorld();
+        
+        return $this->render('/service/use_service.html.twig', [
+            'body' => $result
+        ]);
+    }
+
+
+    // 利用するサービスクラスをコンストラクタインジェクションする
+    private $sampleService;
+    private $mailService;
+
+    public function __construct(\App\Service\SampleService $sampleService,
+        \App\Service\MailService $mailService)
+    {
+        $this->sampleService = $sampleService;
+        $this->mailService = $mailService;
+    }
+
+    /**
+     * @Route("/service/useService2", methods={"GET"})
+     */
+    public function useSerivce2()
+    {
+        $result = $this->sampleService->helloWorld();
+        
+        return $this->render('/service/use_service.html.twig', [
+            'body' => $result
+        ]);
+    }
 }
