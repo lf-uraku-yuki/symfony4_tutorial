@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\BooksService;
 
 class RootController extends AbstractController
 {
@@ -32,11 +33,13 @@ class RootController extends AbstractController
      * @Route("/books/detail/{book_id}/", name="book_detail", 
      * requirements={"book_id"="\d+"})
      */
-    public function bookDetailAction($book_id)
+    public function bookDetailAction($book_id, BooksService $booksService)
     {
+        $book = $booksService->bookDetail($book_id);
+
         return $this->render('books/detail.html.twig', [
             'book_id' => $book_id,
-            'book_detail' => 'dumy text'
+            'book_detail' => $book
         ]);
     }
 

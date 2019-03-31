@@ -6,7 +6,13 @@
 
 <h1>Book Detail ID:{{ book_id }}</h1>
 <p>
-    {{ book_detail }}
+    <div>書籍名: {{ book_detail.book_name }}</div>
+    <div>価格: {{ book_detail.book_price|number_format }}円</div>
+    <div>発売日: {{ book_detail.book_release }}</div>
+</p>
+
+<p>
+{{ dump(book_detail) }}
 </p>
 
 {% endblock %}
